@@ -17,7 +17,7 @@ This is a library in the Redux family of state management solutions, to be used 
 
 ### Should I use it?
 
-Probably not. For anything serious, stick to the large solutions.  
+Probably not. For anything serious, stick to one of the more established solutions.  
 I'm dogfooding it for my own projects, but there are probably still bugs to be fixed.
 
 # Getting started
