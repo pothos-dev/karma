@@ -1,4 +1,5 @@
 import { Draft } from 'immer'
+import { DependencyList } from 'react'
 import { Observable } from 'rxjs'
 
 export interface CreateStoreResult<State, Accessor>
@@ -25,7 +26,7 @@ export type Container<State> = React.ComponentType<{
 export interface Hooks<State, Accessor> {
   useStore(): Store<State, Accessor>
   useStoreState<R>(selector: Selector<State, Accessor, R>): R
-  useStoreUpdate(updater: Updater<State>): () => void
+  useStoreUpdate(updater: Updater<State>, deps?: DependencyList): () => void
   useStoreUpdate(): (updater: Updater<State>) => void
 }
 

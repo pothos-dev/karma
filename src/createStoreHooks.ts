@@ -1,4 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import {
+  DependencyList,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { Context, Hooks, Selector, Updater } from './types'
 
 export function createStoreHooks<S, A>(context: Context<S, A>): Hooks<S, A> {
@@ -21,11 +27,14 @@ export function createStoreHooks<S, A>(context: Context<S, A>): Hooks<S, A> {
     return state
   }
 
-  function useStoreUpdate1(updater: Updater<S>): () => void {
+  function useStoreUpdate1(
+    updater: Updater<S>,
+    deps: DependencyList = []
+  ): () => void {
     const store = useStore()
-    return () => {
+    return useCallback(() => {
       store.update(updater)
-    }
+    }, deps)
   }
 
   function useStoreUpdate2(): (updater: Updater<S>) => void {
@@ -35,8 +44,8 @@ export function createStoreHooks<S, A>(context: Context<S, A>): Hooks<S, A> {
     }
   }
 
-  function useStoreUpdate(arg1?: any): any {
-    if (arg1) return useStoreUpdate1(arg1)
+  function useStoreUpdate(arg1?: any, arg2?: any): any {
+    if (arg1) return useStoreUpdate1(arg1, arg2)
     else return useStoreUpdate2()
   }
 
