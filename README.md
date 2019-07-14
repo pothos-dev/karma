@@ -11,9 +11,9 @@ This is a library in the [Redux](https://github.com/reduxjs/redux) family of sta
 ### It has these design goals:
 
 - Support Typescript out of the box
+- Have React Hooks integrated
 - Require as little boilerplate code as possible
 - Allow for more flexibility in how to structure code
-- React Hooks integrated
 
 ### Differences to Redux:
 
