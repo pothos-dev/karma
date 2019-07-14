@@ -1,12 +1,12 @@
 # @bearbytes/karma
 
-This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, to be used with React (or React Native).
-
 - [Getting started](#getting-started)
 - [Reading from Store](#reading-from-store)
 - [Writing to Store](#writing-to-store)
 - [Writing to Store asynchronously](#writing-to-store-asynchronously)
 - [Redux Devtools Integration](#redux-devtools-integration)
+
+This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, to be used with React (or React Native).
 
 ### It has these design goals:
 
@@ -20,6 +20,14 @@ This is a library in the [Redux](https://github.com/reduxjs/redux) family of sta
 - No actions (or action creators, or action type constants)
 - No reducers
 - No immutable state updates, instead we can mutate state directly (thanks to [immer](https://github.com/immerjs/immer))
+
+### Pros & Cons
+
+- **Pro:** It's dead simple. The API surface is minimal, it's just `get`, `subscribe`, `update`
+- **Pro:** No need to think about how to apply updates to deeply nested state in an immutable way
+- **Pro:** To implement a state update, you only need to write code in one place (with Redux, code for a new action is usually split up in 2 or 3 different places)
+- **Con:** Since the library does not enforce a specific structure, code can get messy in larger projects, unless you are disciplined enough to create your own structure
+- **Con:** No named actions make it hard to debug and monitor where state updates are coming from
 
 ### Should you use it?
 
@@ -118,7 +126,7 @@ function TodoListComponent() {
 
 # Writing to Store
 
-Instead of dispatching an action at one place and having code to update the state in another place, we can simply inline this code:
+Instead of dispatching an action at one place and having code to update the state in another place, we simply inline this code:
 
 ```typescript
 store.update((s) => {
