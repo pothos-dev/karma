@@ -153,3 +153,7 @@ function AddTodoButton(props: { todo: ITodo }) {
   return <button onPress={onPress}>Add</button>
 }
 ```
+
+# Redux DevTools
+
+Should work out of the box. Note that since our "actions" are just anonymous lambda functions, all of them will be called "Anonymous Action".
