@@ -28,6 +28,7 @@ This is a library in the [Redux](https://github.com/reduxjs/redux) family of sta
 - **Pro:** To implement a state update, you only need to write code in one place (with Redux, code for a new action is usually split up in 2 or 3 different places)
 - **Con:** Since the library does not enforce a specific structure, code can get messy in larger projects, unless you are disciplined enough to create your own structure
 - **Con:** No named actions make it hard to debug and monitor where state updates are coming from
+- **Con:** Incompatible with Redux middlewares (but compatible with Redux DevTools)
 
 ### Should you use it?
 
