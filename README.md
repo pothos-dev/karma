@@ -1,6 +1,6 @@
 # @bearbytes/karma
 
-This is a library in the Redux family of state management solutions, to be used with React (or React Native).
+This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, to be used with React (or React Native).
 
 ### It has these design goals:
 
@@ -67,9 +67,8 @@ export const {
   // store and updates the component whenever that data changes.
   useStoreState,
 
-  // This hook can be used to update state in the component.
-  // We could also call store.update() instead, but this can save a
-  // few keystrokes.
+  // This hook can be used in a React component to create a callback to
+  // update state. It has some advantages to calling store.update() directly.
   useStoreUpdate,
 } = createStore(initialState)
 
@@ -121,7 +120,7 @@ store.update((s) => {
 })
 ```
 
-You are only allowed to mutate state within the `update` method of the store. Subscribers to the store will only see the changes done after the function exits. Karma uses [immer](https://github.com/immerjs/immer) under the hood, so the same rules apply (state must consist of plain objects and arrays without circular references).
+You are only allowed to mutate state within the `update` method of the store. Subscribers to the store will only see the updated state after the function exits. Karma uses [immer](https://github.com/immerjs/immer) under the hood, so the same rules apply (state must consist of plain objects and arrays without circular references).
 
 If you use multiple stores in your application, make sure to get the correct one from a React component:
 
@@ -144,10 +143,13 @@ A better way might be to use the `useStoreUpdate` hook, which will automatically
 ```tsx
 function AddTodoButton(props: { todo: ITodo }) {
   const onPress = useStoreUpdate(
+    // Updates done to the store when onPress is called
     (s) => {
       s.todos.push(props.todo)
     },
-    [props.todo] // DependencyList passed to useCallback
+    // DependencyList passed to useCallback
+    //all variables used in the update function should be put here
+    [props.todo]
   )
 
   return <button onPress={onPress}>Add</button>

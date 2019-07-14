@@ -1,7 +1,16 @@
 {
   "name": "@bearbytes/karma",
   "version": "0.0.14",
-  "description": "",
+  "description": "State management for React, comparable but different to Redux",
+  "keywords": [
+    "redux",
+    "state",
+    "state management",
+    "typescript",
+    "immer",
+    "react",
+    "hooks"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,7 +20,7 @@
     "prepare": "tsc",
     "patch": "npm version patch && npm publish --access public"
   },
-  "author": "",
+  "author": "pancomputationalist@mailbox.org",
   "license": "ISC",
   "dependencies": {
     "immer": "^3.1.3",
