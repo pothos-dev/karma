@@ -6,7 +6,7 @@
 - [Writing to Store asynchronously](#writing-to-store-asynchronously)
 - [Redux Devtools Integration](#redux-devtools-integration)
 
-This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, featureing a different set of tradeoffs. It is meant to be used with React (or React Native).
+This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, featuring a different set of tradeoffs. It is meant to be used with React (or React Native).
 
 ### It has these design goals:
 
