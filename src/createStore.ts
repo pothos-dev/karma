@@ -10,6 +10,7 @@ export function createStore<S, A>(
   const store = new StoreInstance(initialState, accessor) as Store<S, A>
   const context = createContext({ store })
   const hooks = createStoreHooks(context)
+
   const Container: Container<S> = ({ children, initialState }) => {
     return React.createElement(
       context.Provider,
@@ -17,6 +18,7 @@ export function createStore<S, A>(
       children
     )
   }
+
   return {
     ...hooks,
     store,
