@@ -2,6 +2,12 @@
 
 This is a library in the [Redux](https://github.com/reduxjs/redux) family of state management solutions, to be used with React (or React Native).
 
+- [Getting started](#getting-started)
+- [Reading from Store](#reading-from-store)
+- [Writing to Store](#writing-to-store)
+- [Writing to Store asynchronously](#writing-to-store-asynchronously)
+- [Redux Devtools Integration](#redux-devtools-integration)
+
 ### It has these design goals:
 
 - Support Typescript out of the box
@@ -156,6 +162,39 @@ function AddTodoButton(props: { todo: ITodo }) {
 }
 ```
 
-# Redux DevTools
+# Writing to Store asynchronously
+
+Dealing with asynchronicity is often an issue with Redux-like solutions. Usually, you have to think about whether to use Thunks or Sagas or something completely different.
+
+With Karma, there is just the `update` function, which may never be async. Don't overthink it, just update the state synchronously whenever something relevant happens:
+
+```typescript
+async function downloadMultipleFiles(urls: string[]) {
+  // Set the loading state
+  store.update((s) => {
+    s.downloadInProgress = true
+  })
+
+  // Download files in parallel
+  await Promise.all(urls.map(downloadSingleFile))
+
+  // All downloading done
+  store.update((s) => {
+    s.downloadInProgress = false
+  })
+}
+
+async function downloadSingleFile(url: string) {
+  const data = await fetch(url)
+  await storeFileOnDisk(url, data)
+
+  // Update the state after each file done
+  store.update((s) => {
+    s.filesDownloaded.push(url)
+  })
+}
+```
+
+# Redux DevTools integration
 
 Should work out of the box. Note that since our "actions" are just anonymous lambda functions, all of them will be called "Anonymous Action".
