@@ -3,9 +3,14 @@ import { createStoreHooks } from './createStoreHooks'
 import { StoreInstance } from './StoreInstance'
 import { Container, CreateStoreResult, Store } from './types'
 
+export function createStore<S>(initialState: S): CreateStoreResult<S, {}>
 export function createStore<S, A>(
   initialState: S,
   accessor: A
+): CreateStoreResult<S, A>
+export function createStore<S, A>(
+  initialState: S,
+  accessor?: A
 ): CreateStoreResult<S, A> {
   const store = new StoreInstance(initialState, accessor) as Store<S, A>
   const context = createContext({ store })
@@ -14,7 +19,11 @@ export function createStore<S, A>(
   const Container: Container<S> = ({ children, initialState }) => {
     return React.createElement(
       context.Provider,
-      { value: { store: new StoreInstance(initialState, accessor) } },
+      {
+        value: {
+          store: new StoreInstance(initialState, accessor || ({} as A)),
+        },
+      },
       children
     )
   }
