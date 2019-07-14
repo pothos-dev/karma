@@ -15,7 +15,7 @@ This is a library in the Redux family of state management solutions, to be used 
 - No reducers
 - No immutable state updates, instead we can mutate state directly (thanks to [immer](https://github.com/immerjs/immer))
 
-### Should I use it?
+### Should you use it?
 
 Probably not. For anything serious, stick to one of the more established solutions.  
 I'm dogfooding it for my own projects, but there are probably still bugs to be fixed.
