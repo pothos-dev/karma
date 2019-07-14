@@ -56,7 +56,7 @@ Call `createStore`, which also creates typesafe hooks and a Context container. Y
 ```typescript
 import { createStore } from '@bearbytes/karma'
 
-export const {
+const {
   // Global store instance. Most apps only need this one.
   store,
 
@@ -79,7 +79,7 @@ export const {
 } = createStore(initialState)
 
 // In most cases, only a single store is needed:
-export { store, useStoreState }
+export { store, useStoreState, useStoreUpdate }
 ```
 
 # Reading from Store
