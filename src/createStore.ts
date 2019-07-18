@@ -10,7 +10,7 @@ export function createStore<S, A>(
 ): CreateStoreResult<S, A>
 export function createStore<S, A>(
   initialState: S,
-  accessor?: A
+  accessor: A = {} as A
 ): CreateStoreResult<S, A> {
   const store = new StoreInstance(initialState, accessor) as Store<S, A>
   const context = createContext({ store })
@@ -21,7 +21,7 @@ export function createStore<S, A>(
       context.Provider,
       {
         value: {
-          store: new StoreInstance(initialState, accessor || ({} as A)),
+          store: new StoreInstance(initialState, accessor),
         },
       },
       children
