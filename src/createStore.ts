@@ -10,20 +10,20 @@ export function createStore<S, A>(
 ): CreateStoreResult<S, A>
 export function createStore<S, A>(
   initialState: S,
-  accessor: A = {} as A
+  accessor?: A
 ): CreateStoreResult<S, A> {
-  const store = new StoreInstance(initialState, accessor) as Store<S, A>
+  function createStoreInstance() {
+    return new StoreInstance(initialState, accessor || ({} as A)) as Store<S, A>
+  }
+
+  const store = createStoreInstance()
   const context = createContext({ store })
   const hooks = createStoreHooks(context)
 
   const Container: Container<S> = ({ children, initialState }) => {
     return React.createElement(
       context.Provider,
-      {
-        value: {
-          store: new StoreInstance(initialState, accessor),
-        },
-      },
+      { value: { store: createStoreInstance() } },
       children
     )
   }
