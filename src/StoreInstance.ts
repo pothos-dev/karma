@@ -20,9 +20,13 @@ export class StoreInstance<S, A> extends BehaviorSubject<EnrichedState<S, A>>
     return this.value
   }
 
-  update(updater: Updater<S>) {
+  update(updater: Updater<S>): void
+  update(actionName: string, updater: Updater<S>): void
+  update(arg1: any, arg2?: any): void {
+    const updater = arg2 || arg1
+    const actionName = arg2 ? arg1 : 'Anonymous Action'
     this.rawState = immer(this.rawState, updater) as S
-    this.devTools.dispatchAction({ type: 'Anonymous Action' }, this.rawState)
+    this.devTools.dispatchAction({ type: actionName }, this.rawState)
     this.next(StoreInstance.enrich(this.rawState, this.accessor))
   }
 

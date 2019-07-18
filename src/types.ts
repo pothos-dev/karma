@@ -12,6 +12,7 @@ export interface Store<State, Accessor>
   extends Observable<EnrichedState<State, Accessor>> {
   get(): EnrichedState<State, Accessor>
   update(updater: Updater<State>): void
+  update(actionName: string, updater: Updater<State>): void
 }
 
 export type Context<State, Accessor> = React.Context<{
@@ -26,11 +27,20 @@ export type Container<State> = React.ComponentType<{
 export interface Hooks<State, Accessor> {
   useStore(): Store<State, Accessor>
   useStoreState<R>(selector: Selector<State, Accessor, R>): R
+
   useStoreUpdate(updater: Updater<State>, deps?: DependencyList): () => void
+  useStoreUpdate(
+    actionName: string,
+    updater: Updater<State>,
+    deps?: DependencyList
+  ): () => void
+
   useStoreUpdate(): (updater: Updater<State>) => void
+  useStoreUpdate(): (actionName: string, updater: Updater<State>) => void
 }
 
 export type Updater<State> = (state: Draft<State>) => void | State
+
 export type Selector<State, Accessor, Result> = (
   state: EnrichedState<State, Accessor>
 ) => Result

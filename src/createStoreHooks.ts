@@ -28,24 +28,43 @@ export function createStoreHooks<S, A>(context: Context<S, A>): Hooks<S, A> {
   }
 
   function useStoreUpdate1(
-    updater: Updater<S>,
-    deps: DependencyList = []
+    arg1: Updater<S> | string,
+    arg2?: DependencyList | Updater<S>,
+    arg3?: DependencyList
   ): () => void {
+    const actionName = typeof arg1 == 'string' ? arg1 : undefined
+    const updater: any = actionName ? arg2 : arg1
+    const deps: any = actionName ? arg3 : arg2
+
     const store = useStore()
     return useCallback(() => {
-      store.update(updater)
+      if (actionName) {
+        store.update(actionName, updater)
+      } else {
+        store.update(updater)
+      }
     }, deps)
   }
 
-  function useStoreUpdate2(): (updater: Updater<S>) => void {
+  function useStoreUpdate2(): any {
     const store = useStore()
-    return (updater: Updater<S>) => {
-      store.update(updater)
+    return (arg1: string | Updater<S>, arg2?: Updater<S>) => {
+      const actionName = typeof arg1 == 'string' ? arg1 : undefined
+      const updater: any = actionName ? arg2 : arg1
+      if (actionName) {
+        store.update(actionName, updater)
+      } else {
+        store.update(updater)
+      }
     }
   }
 
-  function useStoreUpdate(arg1?: any, arg2?: any): any {
-    if (arg1) return useStoreUpdate1(arg1, arg2)
+  function useStoreUpdate(
+    arg1?: Updater<S> | string,
+    arg2?: DependencyList | Updater<S>,
+    arg3?: DependencyList
+  ): any {
+    if (arg1) return useStoreUpdate1(arg1, arg2, arg3)
     else return useStoreUpdate2()
   }
 
