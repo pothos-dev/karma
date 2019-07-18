@@ -12,18 +12,18 @@ export function createStore<S, A>(
   initialState: S,
   accessor?: A
 ): CreateStoreResult<S, A> {
-  function createStoreInstance() {
-    return new StoreInstance(initialState, accessor || ({} as A)) as Store<S, A>
-  }
-
-  const store = createStoreInstance()
+  const store = new StoreInstance<S, A>(initialState, accessor) as Store<S, A>
   const context = createContext({ store })
   const hooks = createStoreHooks(context)
 
   const Container: Container<S> = ({ children, initialState }) => {
     return React.createElement(
       context.Provider,
-      { value: { store: createStoreInstance() } },
+      {
+        value: {
+          store: new StoreInstance<S, A>(initialState, accessor),
+        },
+      },
       children
     )
   }

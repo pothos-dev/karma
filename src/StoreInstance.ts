@@ -5,11 +5,11 @@ import { EnrichedState, Store, Updater } from './types'
 
 export class StoreInstance<S, A> extends BehaviorSubject<EnrichedState<S, A>>
   implements Store<S, A> {
-  accessor: A
+  accessor?: A
   rawState: S
   devTools = attachDevTools()
 
-  constructor(initialState: S, accessor: A) {
+  constructor(initialState: S, accessor?: A) {
     super(StoreInstance.enrich(initialState, accessor))
     this.rawState = initialState
     this.accessor = accessor
@@ -26,7 +26,9 @@ export class StoreInstance<S, A> extends BehaviorSubject<EnrichedState<S, A>>
     this.next(StoreInstance.enrich(this.rawState, this.accessor))
   }
 
-  static enrich<S, A>(state: S, accessor: A): EnrichedState<S, A> {
+  static enrich<S, A>(state: S, accessor?: A): EnrichedState<S, A> {
+    if (!accessor) return state as EnrichedState<S, A>
+
     const rawAccessor: any = {}
     for (const key of Object.keys(accessor)) {
       rawAccessor[key] = (...args: any[]) =>

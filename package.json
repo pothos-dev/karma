@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "rimraf dist && tsc",
     "patch": "npm version patch && npm publish --access public"
   },
   "author": "pancomputationalist@mailbox.org",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/react": "^16.8.23",
     "react": "^16.8.6",
+    "rimraf": "^2.6.3",
     "typescript": "^3.5.3"
   },
   "peerDependencies": {
