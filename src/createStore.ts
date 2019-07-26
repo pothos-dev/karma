@@ -3,16 +3,8 @@ import { createStoreHooks } from './createStoreHooks'
 import { StoreInstance } from './StoreInstance'
 import { Container, CreateStoreResult, Store } from './types'
 
-export function createStore<S>(initialState: S): CreateStoreResult<S, {}>
-export function createStore<S, A>(
-  initialState: S,
-  accessor: A
-): CreateStoreResult<S, A>
-export function createStore<S, A>(
-  initialState: S,
-  accessor?: A
-): CreateStoreResult<S, A> {
-  const store = new StoreInstance<S, A>(initialState, accessor) as Store<S, A>
+export function createStore<S>(initialState: S): CreateStoreResult<S> {
+  const store = new StoreInstance<S>(initialState) as Store<S>
   const context = createContext({ store })
   const hooks = createStoreHooks(context)
 
@@ -21,7 +13,7 @@ export function createStore<S, A>(
       context.Provider,
       {
         value: {
-          store: new StoreInstance<S, A>(initialState, accessor),
+          store: new StoreInstance<S>(initialState),
         },
       },
       children

@@ -7,13 +7,13 @@ import {
 } from 'react'
 import { Context, Hooks, Selector, Updater } from './types'
 
-export function createStoreHooks<S, A>(context: Context<S, A>): Hooks<S, A> {
+export function createStoreHooks<S>(context: Context<S>): Hooks<S> {
   function useStore() {
     const { store } = useContext(context)
     return store
   }
 
-  function useStoreState<R>(selector: Selector<S, A, R>): R {
+  function useStoreState<R>(selector: Selector<S, R>): R {
     const store = useStore()
     const [state, setState] = useState(selector(store.get()))
     useEffect(() => {
