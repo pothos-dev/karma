@@ -1,6 +1,6 @@
 {
   "name": "@bearbytes/karma",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "State management for React, comparable but different to Redux",
   "keywords": [
     "redux",
