@@ -9,8 +9,8 @@ export interface CreateStoreResult<State> extends Hooks<State> {
 
 export interface Store<State> extends Observable<State> {
   get(): State
-  update(updater: Updater<State>): void
-  update(actionName: string, updater: Updater<State>): void
+  update(updater: Updater<State>): State
+  update(actionName: string, updater: Updater<State>): State
 }
 
 export type Context<State> = React.Context<{
@@ -26,15 +26,15 @@ export interface Hooks<State> {
   useStore(): Store<State>
   useStoreState<R>(selector: Selector<State, R>): R
 
-  useStoreUpdate(updater: Updater<State>, deps?: DependencyList): () => void
+  useStoreUpdate(updater: Updater<State>, deps?: DependencyList): () => State
   useStoreUpdate(
     actionName: string,
     updater: Updater<State>,
     deps?: DependencyList
-  ): () => void
+  ): () => State
 
-  useStoreUpdate(): (updater: Updater<State>) => void
-  useStoreUpdate(): (actionName: string, updater: Updater<State>) => void
+  useStoreUpdate(): (updater: Updater<State>) => State
+  useStoreUpdate(): (actionName: string, updater: Updater<State>) => State
 }
 
 export type Updater<State> = (state: Draft<State>) => void | State

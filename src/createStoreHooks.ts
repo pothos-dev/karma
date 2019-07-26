@@ -31,7 +31,7 @@ export function createStoreHooks<S>(context: Context<S>): Hooks<S> {
     arg1: Updater<S> | string,
     arg2?: DependencyList | Updater<S>,
     arg3?: DependencyList
-  ): () => void {
+  ): () => S {
     const actionName = typeof arg1 == 'string' ? arg1 : undefined
     const updater: any = actionName ? arg2 : arg1
     const deps: any = actionName ? arg3 : arg2
@@ -39,9 +39,9 @@ export function createStoreHooks<S>(context: Context<S>): Hooks<S> {
     const store = useStore()
     return useCallback(() => {
       if (actionName) {
-        store.update(actionName, updater)
+        return store.update(actionName, updater)
       } else {
-        store.update(updater)
+        return store.update(updater)
       }
     }, deps)
   }
@@ -52,9 +52,9 @@ export function createStoreHooks<S>(context: Context<S>): Hooks<S> {
       const actionName = typeof arg1 == 'string' ? arg1 : undefined
       const updater: any = actionName ? arg2 : arg1
       if (actionName) {
-        store.update(actionName, updater)
+        return store.update(actionName, updater)
       } else {
-        store.update(updater)
+        return store.update(updater)
       }
     }
   }

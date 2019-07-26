@@ -15,14 +15,15 @@ export class StoreInstance<S> extends BehaviorSubject<S> implements Store<S> {
     return this.value
   }
 
-  update(updater: Updater<S>): void
-  update(actionName: string, updater: Updater<S>): void
-  update(arg1: any, arg2?: any): void {
+  update(updater: Updater<S>): S
+  update(actionName: string, updater: Updater<S>): S
+  update(arg1: any, arg2?: any): S {
     const updater = arg2 || arg1
     const actionName = arg2 ? arg1 : 'Anonymous Action'
     const prevState = this.value
     const nextState = immer(prevState, updater) as S
     this.devTools.dispatchAction({ type: actionName }, nextState)
     this.next(nextState)
+    return nextState
   }
 }
